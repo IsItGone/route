@@ -3,6 +3,7 @@ package com.ddd.route.model;
 import com.ddd.route.Route;
 import java.util.List;
 import lombok.Builder;
+import org.bson.types.ObjectId;
 
 @Builder
 public record RouteResponse(String id, String name, List<String> stations) {
@@ -11,7 +12,8 @@ public record RouteResponse(String id, String name, List<String> stations) {
         return RouteResponse.builder()
                 .id(route.getId())
                 .name(route.getName())
-                .stations(route.getStations())
+                .stations(route.getStations().stream().map(ObjectId::toString).toList())
                 .build();
     }
+
 }

@@ -8,13 +8,13 @@ import org.bson.types.ObjectId;
 
 public record RouteCreate(String name, List<String> stations) {
 
-    public Route convert() {
-        return Route.builder()
-                .name(name)
-                .stations(Optional.ofNullable(stations)
-                        .orElse(Collections.emptyList()).stream()
-                        .map(ObjectId::new).toList())
-                .build();
-    }
+	public Route convert() {
+		return Route.builder()
+				.name(name)
+				.stations(Optional.ofNullable(stations)
+						.orElse(Collections.emptyList()).stream()
+						.map(ObjectId::new).toList())
+				.build();
+	}
 
 }
