@@ -8,13 +8,18 @@ import reactor.core.publisher.Mono;
 
 public interface RouteService {
 
-    Mono<Route> getRouteById(String id);
+	Mono<Route> getRouteById(String id);
 
-    Flux<Route> getRoutes();
+	Flux<Route> getRoutes();
 
-    Mono<String> createRoute(RouteCreate routeCreate);
+	Mono<String> createRoute(RouteCreate routeCreate);
 
-    Mono<Void> updateRoute(RouteUpdate routeUpdate);
+	Mono<Void> updateRoute(RouteUpdate routeUpdate);
 
-    Mono<Void> deleteRouteById(String id);
+	Mono<Void> deleteRouteById(String id);
+
+	Mono<Void> addStationToRoute(String routeId, String stationId);
+
+	Mono<Void> removeStationFromRoute(String routeId, String stationId);
 }
+
