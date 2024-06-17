@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,38 +28,40 @@ public class RouteController {
     private final RouteService routeService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public Mono<String> healthCheck() {
         return Mono.just("OK");
     }
 
-    @GetMapping("/route/{routeId}")
+    @GetMapping("/routes/{routeId}")
+    @ResponseStatus(HttpStatus.OK)
     public Mono<RouteResponse> getRoute(@PathVariable String routeId) {
-        return routeService.getRouteById(routeId)
-                .map(RouteResponse::convert);
+        return routeService.getRouteById(routeId).map(RouteResponse::convert);
     }
 
     @GetMapping("/routes")
+    @ResponseStatus(HttpStatus.OK)
     public Flux<RouteResponse> getRoutes() {
-        return routeService.getRoutes()
-                .map(RouteResponse::convert);
+        return routeService.getRoutes().map(RouteResponse::convert);
     }
 
-    @PostMapping("/route")
-    public Mono<ResponseEntity<Void>> createRoute(@RequestBody RouteCreate routeCreate) {
-        return routeService.createRoute(routeCreate)
-                .map(id -> ResponseEntity.created(Util.createURI(id)).build());
+    @PostMapping("/routes")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<Void> createRoute(@RequestBody RouteCreate routeCreate) {
+        return routeService.createRoute(routeCreate).then();
     }
 
-    @PutMapping("/route")
-    public Mono<ResponseEntity<Void>> updateRoute(@RequestBody RouteUpdate routeUpdate) {
-        return routeService.updateRoute(routeUpdate)
-                .then(Mono.just(ResponseEntity.ok().build()));
+    @PutMapping("/routes")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Void> updateRoute(@RequestBody RouteUpdate routeUpdate) {
+        return routeService.updateRoute(routeUpdate).then();
     }
 
-    @DeleteMapping("/route/{routeId}")
-    public Mono<ResponseEntity<Void>> deleteRoute(@PathVariable String routeId) {
-        return routeService.deleteRouteById(routeId)
-                .then(Mono.just(ResponseEntity.status(HttpStatus.NO_CONTENT).build()));
+    @DeleteMapping("/routes/{routeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> deleteRoute(@PathVariable String routeId) {
+        return routeService.deleteRouteById(routeId).then();
+    }
 
     }
 
