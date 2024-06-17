@@ -1,9 +1,10 @@
 package com.ddd.route.controller;
 
-import com.ddd.route.model.RouteCreate;
-import com.ddd.route.model.RouteResponse;
-import com.ddd.route.model.RouteUpdate;
-import com.ddd.route.model.StationAdd;
+import com.ddd.route.model.RouteConverter;
+import com.ddd.route.model.request.RouteCreate;
+import com.ddd.route.model.response.RouteResponse;
+import com.ddd.route.model.request.RouteUpdate;
+import com.ddd.route.model.request.StationAdd;
 import com.ddd.route.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +36,13 @@ public class RouteController {
 	@GetMapping("/routes/{routeId}")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<RouteResponse> getRoute(@PathVariable String routeId) {
-		return routeService.getRouteById(routeId).map(RouteResponse::convert);
+		return routeService.getRouteById(routeId).map(RouteConverter::toResponse);
 	}
 
 	@GetMapping("/routes")
 	@ResponseStatus(HttpStatus.OK)
 	public Flux<RouteResponse> getRoutes() {
-		return routeService.getRoutes().map(RouteResponse::convert);
+		return routeService.getRoutes().map(RouteConverter::toResponse);
 	}
 
 	@PostMapping("/routes")

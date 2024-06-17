@@ -1,8 +1,8 @@
 package com.ddd.route.service;
 
 import com.ddd.route.Route;
-import com.ddd.route.model.RouteCreate;
-import com.ddd.route.model.RouteUpdate;
+import com.ddd.route.model.request.RouteCreate;
+import com.ddd.route.model.request.RouteUpdate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

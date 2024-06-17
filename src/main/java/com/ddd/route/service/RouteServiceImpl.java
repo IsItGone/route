@@ -2,8 +2,9 @@ package com.ddd.route.service;
 
 import com.ddd.route.Route;
 import com.ddd.route.exception.RouteNotFoundException;
-import com.ddd.route.model.RouteCreate;
-import com.ddd.route.model.RouteUpdate;
+import com.ddd.route.model.RouteConverter;
+import com.ddd.route.model.request.RouteCreate;
+import com.ddd.route.model.request.RouteUpdate;
 import com.ddd.route.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class RouteServiceImpl implements RouteService {
 
 	@Override
 	public Mono<String> createRoute(RouteCreate routeCreate) {
-		return routeRepository.insert(routeCreate.convert())
+		return routeRepository.insert(RouteConverter.toEntity(routeCreate))
 				.flatMap(route -> Mono.just(route.getId()));
 	}
 
@@ -40,7 +41,8 @@ public class RouteServiceImpl implements RouteService {
 	public Mono<Void> updateRoute(RouteUpdate routeUpdate) {
 		return routeRepository.findById(routeUpdate.id())
 				.switchIfEmpty(Mono.error(RouteNotFoundException::new))
-				.flatMap(route -> routeRepository.save(routeUpdate.convert())).then();
+				.flatMap(route -> routeRepository.save(RouteConverter.toEntity(routeUpdate)))
+				.then();
 	}
 
 	@Override
