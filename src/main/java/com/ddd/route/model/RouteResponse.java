@@ -8,12 +8,12 @@ import org.bson.types.ObjectId;
 @Builder
 public record RouteResponse(String id, String name, List<String> stations) {
 
-    public static RouteResponse convert(Route route) {
-        return RouteResponse.builder()
-                .id(route.getId())
-                .name(route.getName())
-                .stations(route.getStations().stream().map(ObjectId::toString).toList())
-                .build();
-    }
+	public static RouteResponse convert(Route route) {
+		return RouteResponse.builder()
+				.id(route.getId())
+				.name(route.getName())
+				.stations(route.getStations().stream().map(ObjectId::toString).toList())
+				.build();
+	}
 
 }
