@@ -1,16 +1,16 @@
 package com.ddd.route.service;
 
-import com.ddd.route.Route;
 import com.ddd.route.model.request.RouteCreate;
 import com.ddd.route.model.request.RouteUpdate;
+import com.ddd.route.model.response.RouteResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface RouteService {
 
-	Mono<Route> getRouteById(String id);
+	Mono<RouteResponse> getRouteById(String id);
 
-	Flux<Route> getRoutes();
+	Flux<RouteResponse> getRoutes();
 
 	Mono<String> createRoute(RouteCreate routeCreate);
 
