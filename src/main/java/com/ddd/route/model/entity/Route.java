@@ -1,9 +1,8 @@
-package com.ddd.route;
+package com.ddd.route.model.entity;
 
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,5 +14,6 @@ public class Route {
 	@Id
 	private String id;
 	private String name;
-	private List<ObjectId> stations;
+	private List<StationInfo> departureStations;
+	private List<StationInfo> arrivalStations;
 }
