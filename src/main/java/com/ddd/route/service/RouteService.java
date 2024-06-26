@@ -17,9 +17,5 @@ public interface RouteService {
 	Mono<Void> updateRoute(RouteUpdate routeUpdate);
 
 	Mono<Void> deleteRouteById(String id);
-
-	Mono<Void> addStationToRoute(String routeId, String stationId);
-
-	Mono<Void> removeStationFromRoute(String routeId, String stationId);
 }
 

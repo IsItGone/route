@@ -8,7 +8,6 @@ import com.ddd.route.model.response.RouteResponse;
 import com.ddd.route.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -50,26 +49,6 @@ public class RouteServiceImpl implements RouteService {
 	@Override
 	public Mono<Void> deleteRouteById(String id) {
 		return routeRepository.deleteById(id);
-	}
-
-	@Override
-	public Mono<Void> addStationToRoute(String routeId, String stationId) {
-		return routeRepository.findById(routeId)
-				.switchIfEmpty(Mono.error(RouteNotFoundException::new))
-				.flatMap(route -> {
-					route.getStations().add(new ObjectId(stationId));
-					return routeRepository.save(route);
-				}).then();
-	}
-
-	@Override
-	public Mono<Void> removeStationFromRoute(String routeId, String stationId) {
-		return routeRepository.findById(routeId)
-				.switchIfEmpty(Mono.error(RouteNotFoundException::new))
-				.flatMap(route -> {
-					route.getStations().remove(new ObjectId(stationId));
-					return routeRepository.save(route);
-				}).then();
 	}
 
 }

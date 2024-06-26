@@ -2,7 +2,6 @@ package com.ddd.route.controller;
 
 import com.ddd.route.model.request.RouteCreate;
 import com.ddd.route.model.request.RouteUpdate;
-import com.ddd.route.model.request.StationAdd;
 import com.ddd.route.model.response.RouteResponse;
 import com.ddd.route.service.RouteService;
 import lombok.RequiredArgsConstructor;
@@ -62,17 +61,4 @@ public class RouteController {
 		return routeService.deleteRouteById(routeId).then();
 	}
 
-	@PostMapping("/routes/{routeId}/stations")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Mono<Void> addStationToRoute(@PathVariable String routeId,
-			@RequestBody StationAdd stationAdd) {
-		return routeService.addStationToRoute(routeId, stationAdd.id()).then();
-	}
-
-	@DeleteMapping("/routes/{routeId}/stations/{stationId}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public Mono<Void> removeStationFromRoute(@PathVariable String routeId,
-			@PathVariable String stationId) {
-		return routeService.removeStationFromRoute(routeId, stationId).then();
-	}
 }
