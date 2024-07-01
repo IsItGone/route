@@ -1,5 +1,6 @@
 package com.ddd.route.controller;
 
+import com.ddd.route.exception.RouteNotFoundException;
 import com.ddd.route.model.request.RouteCreate;
 import com.ddd.route.model.request.RouteUpdate;
 import com.ddd.route.model.response.RouteResponse;
@@ -30,6 +31,13 @@ public class RouteController {
 	public Mono<String> healthCheck() {
 		return Mono.just("OK");
 	}
+
+	@GetMapping("/error")
+	@ResponseStatus(HttpStatus.OK)
+	public Mono<String> errorCheck() {
+		return Mono.error(RouteNotFoundException::new);
+	}
+
 
 	@GetMapping("/routes/{routeId}")
 	@ResponseStatus(HttpStatus.OK)
