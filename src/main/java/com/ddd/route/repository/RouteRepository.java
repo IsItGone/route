@@ -10,7 +10,7 @@ public interface RouteRepository {
 
 	Flux<Route> findAll();
 
-	Mono<Route> save(Route routeDocument);
+	Mono<Route> save(Route route);
 
 	Mono<Void> deleteById(String id);
 }
