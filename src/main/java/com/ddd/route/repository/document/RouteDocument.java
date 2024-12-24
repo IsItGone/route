@@ -1,4 +1,4 @@
-package com.ddd.route.model.entity;
+package com.ddd.route.repository.document;
 
 import java.util.List;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "routes")
 @Getter
 @Builder
-public class Route {
+public class RouteDocument {
 
 	@Id
 	private String id;
 	private String name;
-	private List<StationInfo> departureStations;
-	private List<StationInfo> arrivalStations;
+	private List<StationDocumentInfo> departureStations;
+	private List<StationDocumentInfo> arrivalStations;
 }
