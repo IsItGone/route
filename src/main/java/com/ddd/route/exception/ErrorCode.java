@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ErrorCode {
 	ROUTE_NOT_FOUND("Route not found"),
 	UNKNOWN_ERROR("Unknown error");
-	
+
 	private final String message;
 
 }
