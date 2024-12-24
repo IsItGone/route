@@ -1,11 +1,12 @@
 package com.ddd.route.model;
 
-import com.ddd.route.model.entity.Route;
-import com.ddd.route.model.entity.StationInfo;
 import com.ddd.route.model.request.RouteCreate;
 import com.ddd.route.model.request.RouteUpdate;
 import com.ddd.route.model.response.RouteResponse;
 import com.ddd.route.model.response.StationInfoResponse;
+import com.ddd.route.repository.document.RouteDocument;
+import com.ddd.route.repository.document.StationDocumentInfo;
+import com.ddd.route.service.Route;
 import org.bson.types.ObjectId;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -14,13 +15,17 @@ import org.mapstruct.MappingConstants.ComponentModel;
 @Mapper(componentModel = ComponentModel.SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface RouteMapper {
 
-	Route toEntity(RouteCreate routeCreate);
+	Route toRoute(RouteDocument routeDocument);
 
-	Route toEntity(RouteUpdate routeUpdate);
+	Route toRoute(RouteCreate routeCreate);
 
-	RouteResponse toResponse(Route route);
+	Route toRoute(RouteUpdate routeUpdate);
 
-	StationInfoResponse toResponse(StationInfo stationInfo);
+	RouteDocument toRouteDocument(Route route);
+
+	RouteResponse toRouteResponse(Route route);
+
+	StationInfoResponse toResponse(StationDocumentInfo stationDocumentInfo);
 
 	default ObjectId stringToObjectId(String id) {
 		return new ObjectId(id);

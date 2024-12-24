@@ -1,6 +1,7 @@
 package com.ddd.route.controller;
 
 import com.ddd.route.exception.RouteNotFoundException;
+import com.ddd.route.model.RouteMapper;
 import com.ddd.route.model.request.RouteCreate;
 import com.ddd.route.model.request.RouteUpdate;
 import com.ddd.route.model.response.RouteResponse;
@@ -25,6 +26,7 @@ import reactor.core.publisher.Mono;
 public class RouteController {
 
 	private final RouteService routeService;
+	private final RouteMapper routeMapper;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
@@ -38,29 +40,28 @@ public class RouteController {
 		return Mono.error(RouteNotFoundException::new);
 	}
 
-
 	@GetMapping("/routes/{routeId}")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<RouteResponse> getRoute(@PathVariable String routeId) {
-		return routeService.getRouteById(routeId);
+		return routeService.getRouteById(routeId).map(routeMapper::toRouteResponse);
 	}
 
 	@GetMapping("/routes")
 	@ResponseStatus(HttpStatus.OK)
 	public Flux<RouteResponse> getRoutes() {
-		return routeService.getRoutes();
+		return routeService.getRoutes().map(routeMapper::toRouteResponse);
 	}
 
 	@PostMapping("/routes")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Void> createRoute(@RequestBody RouteCreate routeCreate) {
-		return routeService.createRoute(routeCreate).then();
+		return routeService.upsertRoute(routeMapper.toRoute(routeCreate)).then();
 	}
 
 	@PutMapping("/routes")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<Void> updateRoute(@RequestBody RouteUpdate routeUpdate) {
-		return routeService.updateRoute(routeUpdate).then();
+		return routeService.upsertRoute(routeMapper.toRoute(routeUpdate)).then();
 	}
 
 	@DeleteMapping("/routes/{routeId}")
